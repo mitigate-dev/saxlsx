@@ -11,7 +11,7 @@ module XlsxSaxReader
     end
 
     def initialize(filename)
-      @zip = Zip::ZipFile.open filename
+      @zip = Zip::File.open filename
     end
 
     def close

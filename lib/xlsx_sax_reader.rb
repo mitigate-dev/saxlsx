@@ -1,5 +1,4 @@
-require 'zip/zip'
-require 'zip/zipfilesystem'
+require 'zip'
 require 'ox'
 require 'parallel_enumerable'
 require 'cgi'
