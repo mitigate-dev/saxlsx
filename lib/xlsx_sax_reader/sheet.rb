@@ -11,7 +11,7 @@ module XlsxSaxReader
     end
 
     def rows
-      @rows ||= RowsCollection.new(@index, @file_system, @shared_strings).to_a
+      @rows ||= RowsCollection.new(@index, @file_system, @shared_strings)
     end
 
     def to_csv(path)

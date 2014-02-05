@@ -20,6 +20,12 @@ describe Sheet do
     end
   end
 
+  it 'Rows collection' do
+    Workbook.open filename do |w|
+      w.sheets[0].rows.should be_an_instance_of RowsCollection
+    end
+  end
+
   it 'Rows content' do
     Workbook.open filename do |w|
       w.sheets[0].tap do |s|

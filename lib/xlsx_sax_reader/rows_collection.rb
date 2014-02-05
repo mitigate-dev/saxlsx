@@ -13,5 +13,8 @@ module XlsxSaxReader
       RowsCollectionParser.parse @index, @file_system, @shared_strings, &block
     end
 
+    def [](value)
+      to_a[value]
+    end
   end
 end
