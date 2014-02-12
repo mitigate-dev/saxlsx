@@ -9,7 +9,7 @@ Fast XLSX reader on top of Ox SAX parser.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'saxlsx
+gem 'saxlsx'
 ```
 
 And then execute:
