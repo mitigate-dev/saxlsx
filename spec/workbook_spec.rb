@@ -50,20 +50,4 @@ describe Workbook do
       w.to_csv Dir.pwd
     end
   end
-
-  xit 'Large xlsx' do
-    #require 'ruby-prof'
-
-    #result = RubyProf.profile do
-    Workbook.open 'spec/data/SpecLarge.xlsx' do |w|
-      w.sheets.parallel(in_processes: 4).each do |s|
-        s.to_csv "#{File.dirname(__FILE__)}/../tmp"
-      end
-    end
-    #end
-
-    #printer = RubyProf::GraphHtmlPrinter.new(result)
-    #File.open('profile.html', 'w') { |f| printer.print(f, {}) }
-  end
-
 end

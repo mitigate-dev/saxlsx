@@ -1,4 +1,4 @@
-module XlsxSaxReader
+module Saxlsx
   class BooleanParser
 
     def self.parse(string)

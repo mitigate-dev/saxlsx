@@ -1,4 +1,4 @@
-module XlsxSaxReader
+module Saxlsx
   class RowsCollectionParser < Ox::Sax
 
     def self.parse(index, file_system, shared_strings, &block)

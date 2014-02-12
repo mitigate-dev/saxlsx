@@ -1,4 +1,4 @@
-module XlsxSaxReader
+module Saxlsx
   class SaxParser
 
     def self.parse(handler, xml)

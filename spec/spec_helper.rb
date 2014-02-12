@@ -1,6 +1,6 @@
-require 'xlsx_sax_reader'
+require 'saxlsx'
 
-include XlsxSaxReader
+include Saxlsx
 
 RSpec.configure do |config|
   config.color_enabled = true

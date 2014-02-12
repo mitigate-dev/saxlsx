@@ -1,4 +1,4 @@
-module XlsxSaxReader
+module Saxlsx
   class SheetCollectionParser < Ox::Sax
 
     CurrentSheet = Struct.new :index, :name

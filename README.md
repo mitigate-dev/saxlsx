@@ -1,26 +1,40 @@
-# XlsxSaxReader
+# Saxlsx
 
-[![Build Status](https://travis-ci.org/gabynaiman/xlsx_sax_reader.png?branch=master)](https://travis-ci.org/gabynaiman/xlsx_sax_reader)
+[![Build Status](https://travis-ci.org/mak-it/saxlsx.png?branch=master)](https://travis-ci.org/mak-it/saxlsx)
 
-Fast xlsx reader on top of Ox SAX parser
+Fast XLSX reader on top of Ox SAX parser.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'xlsx_sax_reader'
+```ruby
+gem 'saxlsx
+```
 
 And then execute:
 
-    $ bundle
+```bash
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install xlsx_sax_reader
+```bash
+$ gem install saxlsx
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+Saxslsx::Workbook.open filename do |w|
+  w.sheets.each do |s|
+    s.rows.each do |r|
+      puts r.inspect
+    end
+  end
+end
+```
 
 ## Contributing
 

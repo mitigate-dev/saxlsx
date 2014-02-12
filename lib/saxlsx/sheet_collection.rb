@@ -1,4 +1,4 @@
-module XlsxSaxReader
+module Saxlsx
   class SheetCollection
 
     include Enumerable

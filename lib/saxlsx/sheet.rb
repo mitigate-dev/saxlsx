@@ -1,4 +1,4 @@
-module XlsxSaxReader
+module Saxlsx
   class Sheet
 
     attr_reader :name
