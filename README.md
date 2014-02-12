@@ -27,7 +27,7 @@ $ gem install saxlsx
 ## Usage
 
 ```ruby
-Saxslsx::Workbook.open filename do |w|
+Saxlsx::Workbook.open filename do |w|
   w.sheets.each do |s|
     s.rows.each do |r|
       puts r.inspect
