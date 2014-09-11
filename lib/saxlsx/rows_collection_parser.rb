@@ -57,7 +57,7 @@ module Saxlsx
         when 'n'
           text.to_f
         else
-          text
+          CGI.unescapeHTML(text)
       end
 
     end
