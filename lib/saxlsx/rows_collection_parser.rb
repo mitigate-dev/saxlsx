@@ -100,8 +100,6 @@ module Saxlsx
         @shared_strings[text.to_i]
       when 'b'
         BooleanParser.parse text
-      when 'n'
-        text.to_f
       else
         case @current_number_format
         when :date
@@ -119,8 +117,9 @@ module Saxlsx
         when :percentage
           text.to_f / 100
         else
-          # Auto convert numbers
-          if text =~ /\A-?\d+(\.\d+(?:e[+-]\d+)?)?\Z/i
+          if @current_type == 'n'
+            text.to_f
+          elsif text =~ /\A-?\d+(\.\d+(?:e[+-]\d+)?)?\Z/i # Auto convert numbers
             $1 ? text.to_f : text.to_i
           else
             CGI.unescapeHTML(text)
@@ -141,6 +140,7 @@ module Saxlsx
     #
     # http://stackoverflow.com/questions/4948998/determining-if-an-xlsx-cell-is-date-formatted-for-excel-2007-spreadsheets
     def detect_custom_format_type(code)
+      code = code.gsub(/\[[^\]]+\]/, '') # Strip meta - [...]
       if code =~ /0/
         :float
       elsif code =~ /[ymdhis]/i
