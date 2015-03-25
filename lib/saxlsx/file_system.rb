@@ -26,6 +26,10 @@ module Saxlsx
       @zip.read('xl/sharedStrings.xml')
     end
 
+    def styles
+      @zip.read('xl/styles.xml')
+    end
+
     def sheet(i)
       f = @zip.glob('xl/worksheets/sheet*.xml').sort[i]
       @zip.read(f)

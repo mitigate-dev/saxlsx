@@ -29,7 +29,14 @@ describe Sheet do
   it 'Rows content' do
     Workbook.open filename do |w|
       w.sheets[0].tap do |s|
-        s.rows[0].should eq ['LevenshteinDistance', 0]
+        s.rows[0].should eq [
+          'LevenshteinDistance',
+          3.14,
+          3,
+          DateTime.new(1970, 1, 1, 1, 0, 0),
+          DateTime.new(1970, 1, 1),
+          BigDecimal.new('3.4028236692093801E+38')
+        ]
         s.rows[1].should eq ['Case sensitive', false]
         s.rows[2].should eq ['Fields', 'Type', 'URL Mining']
         s.rows[3].should eq ['autor', 'text', false]
@@ -68,7 +75,7 @@ describe Sheet do
       w.sheets[0].to_csv tmp_path
 
       csv = File.open(csv_file, 'r') { |f| f.readlines }
-      csv[0].should eq "\"LevenshteinDistance\",\"0.0\"\n"
+      csv[0].should eq %{"LevenshteinDistance","3.14","3","1970-01-01T01:00:00+00:00","1970-01-01T00:00:00+00:00","0.34028236692093801E39"\n}
       csv[1].should eq "\"Case sensitive\",\"false\"\n"
       csv[2].should eq "\"Fields\",\"Type\",\"URL Mining\"\n"
       csv[3].should eq "\"autor\",\"text\",\"false\"\n"

@@ -19,7 +19,7 @@ module Saxlsx
     end
 
     def sheets(name=nil)
-      @sheets ||= SheetCollection.new(@file_system, shared_strings).to_a
+      @sheets ||= SheetCollection.new(@file_system, self).to_a
       name.nil? ? @sheets : @sheets.detect { |s| s.name == name }
     end
 
@@ -29,6 +29,10 @@ module Saxlsx
 
     def shared_strings
       @shared_strings ||= SharedStringCollection.new(@file_system).to_a
+    end
+
+    def number_formats
+      @number_formats ||= StyleCollection.new(@file_system).to_a
     end
 
     def to_csv(path)
