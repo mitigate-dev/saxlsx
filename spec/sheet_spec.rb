@@ -12,11 +12,11 @@ describe Sheet do
 
   it 'Rows count' do
     Workbook.open filename do |w|
-      w.sheets[0].should have(7).rows
-      w.sheets[1].should have(9).rows
-      w.sheets[2].should have(3).rows
-      w.sheets[3].should have(2).rows
-      w.sheets[4].should have(3).rows
+      w.sheets[0].rows.count.should eq 7
+      w.sheets[1].rows.count.should eq 9
+      w.sheets[2].rows.count.should eq 3
+      w.sheets[3].rows.count.should eq 2
+      w.sheets[4].rows.count.should eq 3
     end
   end
 

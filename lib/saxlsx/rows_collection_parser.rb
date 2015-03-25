@@ -1,8 +1,8 @@
 module Saxlsx
   class RowsCollectionParser < Ox::Sax
 
-    def self.parse(index, file_system, shared_strings, &block)
-      SaxParser.parse self.new(shared_strings, &block), file_system.sheets[index]
+    def self.parse(index, data, shared_strings, &block)
+      SaxParser.parse self.new(shared_strings, &block), data
     end
 
     def initialize(shared_strings, &block)

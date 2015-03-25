@@ -26,8 +26,9 @@ module Saxlsx
       @zip.read('xl/sharedStrings.xml')
     end
 
-    def sheets
-      @zip.glob('xl/worksheets/sheet*.xml').sort.map{ |f| @zip.read(f).match(/<sheetData>.*<\/sheetData>/).to_s }
+    def sheet(i)
+      f = @zip.glob('xl/worksheets/sheet*.xml').sort[i]
+      @zip.read(f)
     end
 
   end
