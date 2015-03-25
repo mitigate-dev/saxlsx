@@ -76,7 +76,7 @@ module Saxlsx
         when :r
           @current_column = value.gsub(/\d/, '')
         when :s
-          @current_number_format = NUM_FORMATS[@number_formats[value.to_i]]
+          @current_number_format = detect_format_type(value.to_i)
         end
       end
     end
@@ -129,5 +129,25 @@ module Saxlsx
       end
     end
 
+    def detect_format_type(index)
+      format = @number_formats[index]
+      NUM_FORMATS[format] || detect_custom_format_type(format)
+    end
+
+    # This is the least deterministic part of reading xlsx files. Due to
+    # custom styles, you can't know for sure when a date is a date other than
+    # looking at its format and gessing. It's not impossible to guess right,
+    # though.
+    #
+    # http://stackoverflow.com/questions/4948998/determining-if-an-xlsx-cell-is-date-formatted-for-excel-2007-spreadsheets
+    def detect_custom_format_type(code)
+      if code =~ /0/
+        :float
+      elsif code =~ /[ymdhis]/i
+        :date_time
+      else
+        :unsupported
+      end
+    end
   end
 end
