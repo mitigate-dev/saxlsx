@@ -15,7 +15,7 @@ module Saxlsx
     end
 
     def count
-      @count ||= @sheet.match(/<dimension ref="[^:]+:[A-Z]+(\d+)"/)[1].to_i
+      @count ||= @sheet.match(/<dimension ref="[^:]+:[A-Z]*(\d+)"/)[1].to_i
     end
 
     alias :size :count
