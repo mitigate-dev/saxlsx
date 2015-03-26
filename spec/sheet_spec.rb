@@ -104,4 +104,18 @@ describe Sheet do
       end
     end
   end
+
+  context 'with inline strings' do
+    let(:filename) { "#{File.dirname(__FILE__)}/data/SpecInlineStrings.xlsx" }
+
+    it 'should read inline strings' do
+      Workbook.open filename do |w|
+        w.sheets[0].tap do |s|
+          s.rows[0].should eq [
+            'Test'
+          ]
+        end
+      end
+    end
+  end
 end

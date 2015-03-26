@@ -48,13 +48,11 @@ module Saxlsx
 
     def start_element(name)
       @current_element = name
-
-      if name == :row
+      case name
+      when :row
         @current_row = []
         @next_column = 'A'
-      end
-
-      if name == :c
+      when :c
         @current_type = nil
         @current_number_format = nil
       end
@@ -81,7 +79,7 @@ module Saxlsx
     end
 
     def text(value)
-      if @current_row && @current_element == :v
+      if @current_row && (@current_element == :v || @current_element == :t)
         while @next_column != @current_column
           @current_row << nil
           @next_column = ColumnNameGenerator.next_to(@next_column)
@@ -96,7 +94,9 @@ module Saxlsx
     def value_of(text)
       case @current_type
       when 's'
-        @shared_strings[text.to_i] || text
+        @shared_strings[text.to_i]
+      when 'inlineStr'
+        text
       when 'b'
         BooleanParser.parse text
       else
