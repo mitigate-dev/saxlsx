@@ -8,9 +8,9 @@ module Saxlsx
       if char.nil?
         FIRST
       elsif char < LAST
-        previous[0..-2] + (char.ord + 1).chr
+        previous[0..-2] + char.next
       else
-        "#{next_to(previous[0..-2])}A"
+        next_to(previous[0..-2]) + FIRST
       end
     end
   end
