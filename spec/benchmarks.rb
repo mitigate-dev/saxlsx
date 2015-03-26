@@ -5,6 +5,8 @@ require 'rubyXL'
 require 'simple_xlsx_reader'
 require 'creek'
 require 'oxcelix'
+require 'roo'
+require 'dullard'
 
 module Saxlsx
   class Benchmarks
@@ -51,8 +53,14 @@ module Saxlsx
         x.report "creek" do
           run_creek(path)
         end
+        x.report "dullard" do
+          run_dullard(path)
+        end
         x.report "oxcelix" do
           run_oxcelix(path)
+        end
+        x.report "roo" do
+          run_roo(path)
         end
         x.report "rubyXL" do
           run_rubyxl(path)
@@ -107,6 +115,24 @@ module Saxlsx
 
     def run_simple_xlsx_reader(path)
       w = SimpleXlsxReader.open path
+      w.sheets.each do |s|
+        s.rows.each do |r|
+          r.to_a.inspect
+        end
+      end
+    end
+
+    def run_roo(path)
+      w = Roo::Excelx.new path
+      w.each_with_pagename do |_, s|
+        s.each do |r|
+          r.to_a.inspect
+        end
+      end
+    end
+
+    def run_dullard(path)
+      w = Dullard::Workbook.new path
       w.sheets.each do |s|
         s.rows.each do |r|
           r.to_a.inspect
