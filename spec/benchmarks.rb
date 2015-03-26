@@ -4,6 +4,7 @@ require 'saxlsx'
 require 'rubyXL'
 require 'simple_xlsx_reader'
 require 'creek'
+require 'oxcelix'
 
 module Saxlsx
   class Benchmarks
@@ -50,6 +51,9 @@ module Saxlsx
         x.report "creek" do
           run_creek(path)
         end
+        x.report "oxcelix" do
+          run_oxcelix(path)
+        end
         x.report "rubyXL" do
           run_rubyxl(path)
         end
@@ -69,6 +73,17 @@ module Saxlsx
           r.values.inspect
         end
       end
+    end
+
+    def run_oxcelix(path)
+      w = Oxcelix::Workbook.new(path)
+      w.sheets.each do |s|
+        s.to_ru.to_a.each do |r|
+          r.inspect
+        end
+      end
+    rescue
+      puts "ERROR"
     end
 
     def run_rubyxl(path)
