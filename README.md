@@ -2,14 +2,12 @@
 
 [![Join the chat at https://gitter.im/mak-it/saxlsx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mak-it/saxlsx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status](https://travis-ci.org/mak-it/saxlsx.png?branch=master)](https://travis-ci.org/mak-it/saxlsx)
+[![Build Status](https://travis-ci.org/mak-it/saxlsx.svg?branch=master)](https://travis-ci.org/mak-it/saxlsx)
 
 **Fast** and memory efficient XLSX reader on top of Ox SAX parser.
 
 It reads row by row and doesn't store the whole sheet in memory, so this
-approach is more suitable when parsing big files. This also means that functions
-and references will not work, as this style of parsing doesn't know
-anything about other rows.
+approach is more suitable when parsing big files.
 
 ## Installation
 
@@ -36,6 +34,7 @@ $ gem install saxlsx
 ```ruby
 Saxlsx::Workbook.open filename do |w|
   w.sheets.each do |s|
+    puts s.rows.count
     s.rows.each do |r|
       puts r.inspect
     end
