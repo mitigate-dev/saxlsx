@@ -2,7 +2,12 @@ module Saxlsx
   class SharedStringCollectionParser < Ox::Sax
 
     def self.parse(file_system, &block)
-      SaxParser.parse self.new(&block), file_system.shared_strings
+      shared_strings = file_system.shared_strings
+      if shared_strings
+        SaxParser.parse self.new(&block), shared_strings
+      else
+        []
+      end
     end
 
     def initialize(&block)

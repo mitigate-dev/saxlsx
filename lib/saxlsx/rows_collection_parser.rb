@@ -35,13 +35,12 @@ module Saxlsx
       49 => :unsupported     # @
     }
 
-    DATE_SYSTEM_1900 = DateTime.new(1899, 12, 30)
-
     def self.parse(index, data, workbook, &block)
       SaxParser.parse self.new(workbook, &block), data
     end
 
     def initialize(workbook, &block)
+      @base_date      = workbook.base_date
       @shared_strings = workbook.shared_strings
       @number_formats = workbook.number_formats
       @block = block
@@ -97,16 +96,16 @@ module Saxlsx
     def value_of(text)
       case @current_type
       when 's'
-        @shared_strings[text.to_i]
+        @shared_strings[text.to_i] || text
       when 'b'
         BooleanParser.parse text
       else
         case @current_number_format
         when :date
-          DATE_SYSTEM_1900 + text.to_i
+          @base_date + text.to_i
         when :date_time
           # Round time to seconds
-          date = DATE_SYSTEM_1900 + (text.to_f * 86400).round.fdiv(86400)
+          date = @base_date + (text.to_f * 86400).round.fdiv(86400)
           DateTime.new(date.year, date.month, date.day, date.hour, date.minute, date.second)
         when :fixnum
           text.to_i

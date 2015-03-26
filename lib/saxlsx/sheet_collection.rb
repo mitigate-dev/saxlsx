@@ -3,13 +3,13 @@ module Saxlsx
 
     include Enumerable
 
-    def initialize(file_system, shared_strings)
+    def initialize(file_system, workbook)
       @file_system = file_system
-      @shared_strings = shared_strings
+      @workbook = workbook
     end
 
     def each(&block)
-      SheetCollectionParser.parse @file_system, @shared_strings, &block
+      SheetCollectionParser.parse @file_system, @workbook, &block
     end
 
   end

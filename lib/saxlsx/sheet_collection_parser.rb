@@ -3,30 +3,55 @@ module Saxlsx
 
     CurrentSheet = Struct.new :index, :name
 
-    def self.parse(file_system, shared_strings, &block)
-      SaxParser.parse self.new(file_system, shared_strings, &block), file_system.workbook
+    def self.parse(file_system, workbook, &block)
+      SaxParser.parse(
+        self.new(file_system, workbook, &block),
+        file_system.workbook
+      )
     end
 
-    def initialize(file_system, shared_strings, &block)
+    def initialize(file_system, workbook, &block)
       @file_system = file_system
-      @shared_strings = shared_strings
+      @workbook = workbook
       @block = block
       @index = -1
+      @workbook_pr = false
     end
 
     def start_element(name)
-      @current_sheet = CurrentSheet.new(@index += 1) if name == :sheet
+      case name
+      when :sheet
+        @current_sheet = CurrentSheet.new(@index += 1)
+      when :workbookPr
+        @workbook_pr = true
+      end
     end
 
     def end_element(name)
-      if name == :sheet
-        @block.call Sheet.new(@current_sheet.name, @current_sheet.index, @file_system, @shared_strings)
+      case name
+      when :sheet
+        @block.call Sheet.new(
+          @current_sheet.name,
+          @current_sheet.index,
+          @file_system,
+          @workbook
+        )
         @current_sheet = nil
+      when :workbookPr
+        @workbook_pr = false
       end
     end
 
     def attr(name, value)
-      @current_sheet.name = value if @current_sheet && name == :name
+      if @current_sheet
+        if name == :name
+          @current_sheet.name = value
+        end
+      elsif @workbook_pr
+        if name == :date1904 && value =~ /true|1/i
+          @workbook.date1904 = true
+        end
+      end
     end
 
   end

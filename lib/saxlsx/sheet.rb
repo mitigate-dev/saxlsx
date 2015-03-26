@@ -3,15 +3,15 @@ module Saxlsx
 
     attr_reader :name
 
-    def initialize(name, index, file_system, shared_strings)
+    def initialize(name, index, file_system, workbook)
       @name = name
       @index = index
       @file_system = file_system
-      @shared_strings = shared_strings
+      @workbook = workbook
     end
 
     def rows
-      @rows ||= RowsCollection.new(@index, @file_system, @shared_strings)
+      @rows ||= RowsCollection.new(@index, @file_system, @workbook)
     end
 
     def to_csv(path)

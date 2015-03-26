@@ -90,4 +90,18 @@ describe Sheet do
     end
   end
 
+  context 'with 1904 date system' do
+    let(:filename) { "#{File.dirname(__FILE__)}/data/Spec1904.xlsx" }
+
+    it 'should use 1904 date system when converting dates' do
+      Workbook.open filename do |w|
+        w.sheets[0].tap do |s|
+          s.rows[0].should eq [
+            DateTime.new(1970, 1, 1, 1, 0, 0),
+            DateTime.new(1970, 1, 1)
+          ]
+        end
+      end
+    end
+  end
 end

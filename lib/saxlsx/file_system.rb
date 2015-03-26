@@ -19,11 +19,12 @@ module Saxlsx
     end
 
     def workbook
-      @zip.read('xl/workbook.xml').match(/<sheets>.*<\/sheets>/).to_s
+      @zip.read('xl/workbook.xml')
     end
 
     def shared_strings
-      @zip.read('xl/sharedStrings.xml')
+      file = @zip.glob('xl/shared[Ss]trings.xml').first
+      @zip.read(file) if file
     end
 
     def styles
