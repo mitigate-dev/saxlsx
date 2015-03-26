@@ -50,8 +50,6 @@ $ rake bench
 ```
 Shared Strings
 
-Shared Strings
-
 creek                  3.200000   0.060000   3.260000 (  3.392446)
 dullard                3.020000   0.070000   3.090000 (  3.154582)
 oxcelix                1.720000   0.060000   1.780000 (  1.824003)
