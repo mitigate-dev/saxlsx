@@ -2,7 +2,12 @@
 
 [![Build Status](https://travis-ci.org/mak-it/saxlsx.png?branch=master)](https://travis-ci.org/mak-it/saxlsx)
 
-**Fast** XLSX reader on top of Ox SAX parser.
+**Fast** and memory efficient XLSX reader on top of Ox SAX parser.
+
+It reads row by row and doesn't store the whole sheet in memory, so this
+approach is more suitable when parsing big files. This also means that functions
+and references will not work, as this style of parsing doesn't know
+anything about other rows.
 
 ## Installation
 
