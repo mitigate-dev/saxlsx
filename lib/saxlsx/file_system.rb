@@ -32,8 +32,7 @@ module Saxlsx
     end
 
     def sheet(i)
-      f = @zip.glob('xl/worksheets/sheet*.xml').sort[i]
-      @zip.read(f)
+      @zip.read("xl/worksheets/sheet#{i+1}.xml")
     end
 
   end
