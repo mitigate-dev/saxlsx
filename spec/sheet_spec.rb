@@ -33,7 +33,7 @@ describe Sheet do
           'LevenshteinDistance',
           3.14,
           3,
-          DateTime.new(1970, 1, 1, 1, 0, 0),
+          DateTime.new(2013, 12, 13, 8, 0, 58),
           DateTime.new(1970, 1, 1),
           BigDecimal.new('3.4028236692093801E+38')
         ]
@@ -80,7 +80,7 @@ describe Sheet do
       w.sheets[0].to_csv tmp_path
 
       csv = File.open(csv_file, 'r') { |f| f.readlines }
-      csv[0].should eq %{"LevenshteinDistance","3.14","3","1970-01-01T01:00:00+00:00","1970-01-01T00:00:00+00:00","0.34028236692093801E39"\n}
+      csv[0].should eq %{"LevenshteinDistance","3.14","3","2013-12-13T08:00:58+00:00","1970-01-01T00:00:00+00:00","0.34028236692093801E39"\n}
       csv[1].should eq %{"Case sensitive","false","3.0","1970-01-01T01:00:00+00:00"\n}
       csv[2].should eq "\"Fields\",\"Type\",\"URL Mining\"\n"
       csv[3].should eq "\"autor\",\"text\",\"false\"\n"
