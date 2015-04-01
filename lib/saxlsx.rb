@@ -1,3 +1,5 @@
+require 'bigdecimal'
+require 'rational'
 require 'zip'
 require 'ox'
 require 'cgi'

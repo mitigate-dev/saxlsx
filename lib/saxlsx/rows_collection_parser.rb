@@ -1,6 +1,6 @@
 module Saxlsx
   class RowsCollectionParser < Ox::Sax
-    SECONDS_IN_DAY = BigDecimal.new(86400)
+    SECONDS_IN_DAY = 86400
     NUM_FORMATS = {
       0  => :string,         # General
       1  => :fixnum,         # 0
@@ -106,7 +106,7 @@ module Saxlsx
           @base_date + text.to_i
         when :date_time
           # Round time to seconds
-          date = @base_date + (BigDecimal.new(text) * SECONDS_IN_DAY).round / SECONDS_IN_DAY
+          date = @base_date + Rational((text.to_f * SECONDS_IN_DAY).round, SECONDS_IN_DAY)
           DateTime.new(date.year, date.month, date.day, date.hour, date.minute, date.second)
         when :fixnum
           text.to_i
