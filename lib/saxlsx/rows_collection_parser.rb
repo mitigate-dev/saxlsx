@@ -110,12 +110,10 @@ module Saxlsx
           DateTime.new(date.year, date.month, date.day, date.hour, date.minute, date.second)
         when :fixnum
           text.to_i
-        when :float
+        when :float, :percentage
           text.to_f
         when :bignum
           BigDecimal.new(text)
-        when :percentage
-          text.to_f / 100
         else
           if @current_type == 'n'
             text.to_f
