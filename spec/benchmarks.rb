@@ -49,7 +49,7 @@ module Saxlsx
       puts
       puts title
       puts
-      Benchmark.benchmark('', 20) do |x|
+      Benchmark.bmbm(20) do |x|
         x.report "creek" do
           run_creek(path)
         end

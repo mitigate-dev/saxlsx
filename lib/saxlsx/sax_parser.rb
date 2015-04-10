@@ -2,9 +2,9 @@ module Saxlsx
   class SaxParser
 
     def self.parse(handler, xml)
-      io = StringIO.new xml
-      Ox.sax_parse(handler, io)
-      io.close
+      Ox.sax_parse(handler, xml)
+    ensure
+      xml.rewind
     end
 
   end

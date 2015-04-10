@@ -19,20 +19,20 @@ module Saxlsx
     end
 
     def workbook
-      @zip.read('xl/workbook.xml')
+      @zip.get_input_stream('xl/workbook.xml')
     end
 
     def shared_strings
       file = @zip.glob('xl/shared[Ss]trings.xml').first
-      @zip.read(file) if file
+      @zip.get_input_stream(file) if file
     end
 
     def styles
-      @zip.read('xl/styles.xml')
+      @zip.get_input_stream('xl/styles.xml')
     end
 
     def sheet(i)
-      @zip.read("xl/worksheets/sheet#{i+1}.xml")
+      @zip.get_input_stream("xl/worksheets/sheet#{i+1}.xml")
     end
 
   end
