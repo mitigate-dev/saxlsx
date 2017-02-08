@@ -10,5 +10,3 @@ gem 'creek'
 gem 'oxcelix'
 gem 'roo'
 gem 'dullard'
-
-gem 'byebug'
