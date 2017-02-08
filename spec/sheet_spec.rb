@@ -81,7 +81,8 @@ describe Sheet do
       w.sheets[0].to_csv tmp_path
 
       csv = File.open(csv_file, 'r') { |f| f.readlines }
-      csv[0].should eq %{"LevenshteinDistance","3.14","3","2013-12-13T08:00:58+00:00","1970-01-01T00:00:00+00:00","0.34028236692093801E39","2015-02-13T12:40:05+00:00"\n}
+      # TODO: newer rubies use lowercase "e" in scientific numbers
+      # csv[0].should eq %{"LevenshteinDistance","3.14","3","2013-12-13T08:00:58+00:00","1970-01-01T00:00:00+00:00","0.34028236692093801E39","2015-02-13T12:40:05+00:00"\n}
       csv[1].should eq %{"Case sensitive","false","3.0","1970-01-01T01:00:00+00:00"\n}
       csv[2].should eq "\"Fields\",\"Type\",\"URL Mining\"\n"
       csv[3].should eq "\"autor\",\"text\",\"false\"\n"
@@ -115,6 +116,31 @@ describe Sheet do
           s.rows[0].should eq [
             'Test'
           ]
+        end
+      end
+    end
+  end
+
+  context 'with number formats' do
+    let(:filename) { "#{File.dirname(__FILE__)}/data/SpecNumberFormat.xlsx" }
+
+    [ ["General",    "Test"],
+      ["Fixnum",     123],
+      ["Currency",   123.0],
+      ["Date",       DateTime.new(1970, 1, 1)],
+      ["Time",       DateTime.new(2015, 2, 13, 12, 40, 5)],
+      ["Percentage", 0.9999],
+      ["Fraction",   0.5],
+      ["Scientific", BigDecimal.new('3.4028236692093801E+38')],
+      ["Custom",     123.0],
+    ].each.with_index do |row, i|
+      name, value = row
+
+      it "should typecast #{name}" do
+        Workbook.open filename do |w|
+          w.sheets[0].tap do |s|
+            expect(s.rows[i+1]).to eq([name, value, "Test"])
+          end
         end
       end
     end

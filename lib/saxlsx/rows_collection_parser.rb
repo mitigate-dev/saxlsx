@@ -97,33 +97,36 @@ module Saxlsx
       when 's'
         @shared_strings[text.to_i]
       when 'inlineStr'
-        text
+        CGI.unescapeHTML(text)
       when 'b'
         BooleanParser.parse text
       else
         case @current_number_format
         when :date
-          @base_date + text.to_i
+          @base_date + Integer(text)
         when :date_time
           # Round time to seconds
-          date = @base_date + Rational((text.to_f * SECONDS_IN_DAY).round, SECONDS_IN_DAY)
+          date = @base_date + Rational((Float(text) * SECONDS_IN_DAY).round, SECONDS_IN_DAY)
           DateTime.new(date.year, date.month, date.day, date.hour, date.minute, date.second)
         when :fixnum
-          text.to_i
+          Integer(text)
         when :float, :percentage
-          text.to_f
+          Float(text)
         when :bignum
-          BigDecimal.new(text)
+          Float(text) # raises ArgumentError if text is not a number
+          BigDecimal(text) # doesn't raise ArgumentError
         else
           if @current_type == 'n'
-            text.to_f
+            Float(text)
           elsif text =~ /\A-?\d+(\.\d+(?:e[+-]\d+)?)?\Z/i # Auto convert numbers
-            $1 ? text.to_f : text.to_i
+            $1 ? Float(text) : Integer(text)
           else
             CGI.unescapeHTML(text)
           end
         end
       end
+    rescue ArgumentError
+      CGI.unescapeHTML(text)
     end
 
     def detect_format_type(index)
