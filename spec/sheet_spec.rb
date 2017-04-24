@@ -121,10 +121,12 @@ describe Sheet do
     end
   end
 
-  context 'with number formats' do
+  context 'with number formats and auto format' do
     let(:filename) { "#{File.dirname(__FILE__)}/data/SpecNumberFormat.xlsx" }
 
     [ ["General",    "Test"],
+      ["General",    123],
+      ["General",    123.5],
       ["Fixnum",     123],
       ["Currency",   123.0],
       ["Date",       DateTime.new(1970, 1, 1)],
@@ -138,6 +140,33 @@ describe Sheet do
 
       it "should typecast #{name}" do
         Workbook.open filename do |w|
+          w.sheets[0].tap do |s|
+            expect(s.rows[i+1]).to eq([name, value, "Test"])
+          end
+        end
+      end
+    end
+  end
+
+  context 'with number formats and without auto format' do
+    let(:filename) { "#{File.dirname(__FILE__)}/data/SpecNumberFormat.xlsx" }
+
+    [ ["General",    "Test"],
+      ["General",    "0123"],
+      ["General",    "0123.50"],
+      ["Fixnum",     123],
+      ["Currency",   123.0],
+      ["Date",       DateTime.new(1970, 1, 1)],
+      ["Time",       DateTime.new(2015, 2, 13, 12, 40, 5)],
+      ["Percentage", 0.9999],
+      ["Fraction",   0.5],
+      ["Scientific", BigDecimal.new('3.4028236692093801E+38')],
+      ["Custom",     123.0],
+    ].each.with_index do |row, i|
+      name, value = row
+
+      it "should typecast #{name}" do
+        Workbook.open filename, auto_format: false do |w|
           w.sheets[0].tap do |s|
             expect(s.rows[i+1]).to eq([name, value, "Test"])
           end

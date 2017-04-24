@@ -14,8 +14,8 @@ module Saxlsx
       9  => :percentage,     # 0%
       10 => :percentage,     # 0.00%
       11 => :bignum,         # 0.00E+00
-      12 => :unsupported,    # # ?/?
-      13 => :unsupported,    # # ??/??
+      12 => :rational,       # # ?/?
+      13 => :rational,       # # ??/??
       14 => :date,           # mm-dd-yy
       15 => :date,           # d-mmm-yy
       16 => :date,           # d-mmm
@@ -42,6 +42,7 @@ module Saxlsx
 
     def initialize(workbook, &block)
       @base_date      = workbook.base_date
+      @auto_format    = workbook.auto_format
       @shared_strings = workbook.shared_strings
       @number_formats = workbook.number_formats
       @block = block
@@ -109,17 +110,20 @@ module Saxlsx
           date = @base_date + Rational((Float(text) * SECONDS_IN_DAY).round, SECONDS_IN_DAY)
           DateTime.new(date.year, date.month, date.day, date.hour, date.minute, date.second)
         when :fixnum
-          Integer(text)
+          Integer(text, 10)
         when :float, :percentage
           Float(text)
+        when :rational
+          Rational(text)
         when :bignum
           Float(text) # raises ArgumentError if text is not a number
           BigDecimal(text) # doesn't raise ArgumentError
         else
           if @current_type == 'n'
             Float(text)
-          elsif text =~ /\A-?\d+(\.\d+(?:e[+-]\d+)?)?\Z/i # Auto convert numbers
-            $1 ? Float(text) : Integer(text)
+          elsif @auto_format && text =~ /\A-?\d+(\.\d+(?:e[+-]\d+)?)?\Z/i
+            # Auto convert numbers
+            $1 ? Float(text) : Integer(text, 10)
           else
             CGI.unescapeHTML(text)
           end
