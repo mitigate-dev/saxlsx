@@ -32,7 +32,7 @@ $ gem install saxlsx
 ## Usage
 
 ```ruby
-Saxlsx::Workbook.open filename do |w|
+Saxlsx::Workbook.open filename, auto_format: true do |w|
   w.sheets.each do |s|
     puts s.rows.count
     s.rows.each do |r|
@@ -41,6 +41,10 @@ Saxlsx::Workbook.open filename do |w|
   end
 end
 ```
+
+By default `saxlsx` will try to convert `General` type cells that look like
+numbers to ruby floats or integers. You can disable this feature
+using `auto_format: false`.
 
 ## How fast is it?
 
