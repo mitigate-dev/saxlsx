@@ -4,18 +4,20 @@ module Saxlsx
     DATE_SYSTEM_1904 = DateTime.new(1904, 1, 1)
 
     attr_accessor :date1904
+    attr_reader :auto_format
 
-    def self.open(filename)
+    def self.open(*args)
       begin
-        workbook = self.new(filename)
+        workbook = self.new(*args)
         yield workbook
       ensure
         workbook.close
       end
     end
 
-    def initialize(filename)
+    def initialize(filename, auto_format: true)
       @file_system = FileSystem.new filename
+      @auto_format = auto_format
     end
 
     def close
