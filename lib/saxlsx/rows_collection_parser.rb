@@ -104,7 +104,7 @@ module Saxlsx
       else
         case @current_number_format
         when :date
-          @base_date + Integer(text)
+          @base_date + Float(text)
         when :date_time
           # Round time to seconds
           date = @base_date + Rational((Float(text) * SECONDS_IN_DAY).round, SECONDS_IN_DAY)
