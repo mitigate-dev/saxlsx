@@ -32,6 +32,7 @@ module Saxlsx
       when :sheet
         @block.call Sheet.new(
           @current_sheet.name,
+          @current_sheet.state,
           @current_sheet.index,
           @file_system,
           @workbook

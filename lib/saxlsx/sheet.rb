@@ -1,10 +1,11 @@
 module Saxlsx
   class Sheet
 
-    attr_reader :name
+    attr_reader :name, :state
 
-    def initialize(name, index, file_system, workbook)
+    def initialize(name, state, index, file_system, workbook)
       @name = name
+      @state = state
       @index = index
       @file_system = file_system
       @workbook = workbook
