@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Saxlsx
   class SharedStringCollectionParser < Ox::Sax
 
@@ -26,7 +27,7 @@ module Saxlsx
     end
 
     def text(value)
-      @current_string << CGI.unescapeHTML(value) if @current_string
+      @current_string = CGI.unescapeHTML(value) if @current_string
     end
 
   end

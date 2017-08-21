@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Saxlsx
   class StyleCollectionParser < Ox::Sax
     def self.parse(file_system, &block)

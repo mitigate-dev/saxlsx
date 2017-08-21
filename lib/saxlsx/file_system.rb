@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Saxlsx
   class FileSystem
     IO_METHODS = [:tell, :seek, :read, :close]

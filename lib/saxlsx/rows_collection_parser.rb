@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Saxlsx
   class RowsCollectionParser < Ox::Sax
     SECONDS_IN_DAY = 86400

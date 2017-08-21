@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Saxlsx
   class Workbook
     DATE_SYSTEM_1900 = DateTime.new(1899, 12, 30)
