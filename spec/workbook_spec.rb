@@ -4,6 +4,13 @@ describe Workbook do
 
   let(:filename) { "#{File.dirname(__FILE__)}/data/Spec.xlsx" }
 
+  it 'Reads from StringIO' do
+    io = StringIO.new File.read(filename)
+    Workbook.open io do |w|
+      w.should have(5).sheets
+    end
+  end
+
   it 'Sheets count' do
     Workbook.open filename do |w|
       w.should have(5).sheets

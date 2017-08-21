@@ -11,7 +11,7 @@ module Saxlsx
         workbook = self.new(*args)
         yield workbook
       ensure
-        workbook.close
+        workbook.close if workbook
       end
     end
 

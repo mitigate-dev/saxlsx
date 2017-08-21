@@ -1,5 +1,6 @@
 module Saxlsx
   class FileSystem
+    IO_METHODS = [:tell, :seek, :read, :close]
 
     def self.open(filename)
       begin
@@ -11,11 +12,16 @@ module Saxlsx
     end
 
     def initialize(filename)
-      @zip = Zip::File.open filename
+      if IO_METHODS.map { |method| filename.respond_to?(method) }.all?
+        @zip = Zip::File.open_buffer filename
+        @io = true
+      else
+        @zip = Zip::File.open filename
+      end
     end
 
     def close
-      @zip.close
+      @zip.close unless @io
     end
 
     def workbook

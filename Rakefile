@@ -5,7 +5,6 @@ Bundler::GemHelper.install_tasks
 RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
-
 task :bench do
   require './spec/benchmarks.rb'
   Saxlsx::Benchmarks.new.run
