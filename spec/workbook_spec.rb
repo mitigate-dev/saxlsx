@@ -47,8 +47,8 @@ describe Workbook do
   it 'Shared strings' do
     Workbook.open filename do |w|
       w.should have(56).shared_strings
-      w.shared_strings[0].should eq 'LevenshteinDistance'
-      w.shared_strings[55].should eq 'TST_ModMan_Insulto_SU_Normal'
+      w.shared_strings.should include 'LevenshteinDistance'
+      w.shared_strings.should include 'TST_ModMan_Insulto_SU_Normal'
     end
   end
 

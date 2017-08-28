@@ -16,7 +16,7 @@ module Saxlsx
     end
 
     def start_element(name)
-      @current_string = '' if name == :si
+      @current_string = String.new if name == :si
     end
 
     def end_element(name)
@@ -27,7 +27,7 @@ module Saxlsx
     end
 
     def text(value)
-      @current_string = CGI.unescapeHTML(value) if @current_string
+      @current_string << CGI.unescapeHTML(value) if @current_string
     end
 
   end
