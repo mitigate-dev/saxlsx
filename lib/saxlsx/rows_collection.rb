@@ -15,19 +15,24 @@ module Saxlsx
       RowsCollectionParser.parse @index, @sheet, @workbook, &block
     end
 
-    def count
+    def count(force_safe: false)
       unless defined?(@count)
         @count = 0
-        begin
-          @sheet.each_line('>') do |line|
-            matches = line.match(/<dimension ref="[^:]+:[A-Z]*(\d+)"/)
-            if matches
-              @count = matches[1].to_i
-              break if @count
+        unless force_safe
+          begin
+            @sheet.each_line('>') do |line|
+              matches = line.match(/<dimension ref="[^:]+:[A-Z]*(\d+)"/)
+              if matches
+                @count = matches[1].to_i
+                break if @count
+              end
             end
+          ensure
+            @sheet.rewind
           end
-        ensure
-          @sheet.rewind
+        end
+        unless @count > 0
+          each { @count += 1 }
         end
       end
       @count

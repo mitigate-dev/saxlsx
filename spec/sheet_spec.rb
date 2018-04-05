@@ -93,6 +93,19 @@ describe Sheet do
     end
   end
 
+  it 'Handle missing fonts and dimension tags' do
+    filename = "#{File.dirname(__FILE__)}/data/SpecSloppy.xlsx"
+
+    Workbook.open filename do |w|
+      w.sheets[0].rows.count.should eq 85
+      headers = w.sheets[0].rows.first
+      headers.count.should eq 52
+      headers.each do |str|
+        str.should eq "X"
+      end
+    end
+  end
+
   context 'with 1904 date system' do
     let(:filename) { "#{File.dirname(__FILE__)}/data/Spec1904.xlsx" }
 
