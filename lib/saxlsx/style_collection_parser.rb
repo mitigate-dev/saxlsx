@@ -33,7 +33,7 @@ module Saxlsx
           if custom_num_fmt_code
             @block.call custom_num_fmt_code
           else
-            @block.call @num_fmt_id
+            @block.call @num_fmt_id.to_i
           end
         end
       when :numFmt
