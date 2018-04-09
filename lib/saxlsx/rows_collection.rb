@@ -16,21 +16,7 @@ module Saxlsx
     end
 
     def count
-      unless defined?(@count)
-        @count = 0
-        begin
-          @sheet.each_line('>') do |line|
-            matches = line.match(/<dimension ref="[^:]+:[A-Z]*(\d+)"/)
-            if matches
-              @count = matches[1].to_i
-              break if @count
-            end
-          end
-        ensure
-          @sheet.rewind
-        end
-      end
-      @count
+      @count ||= RowsCollectionCountParser.count @sheet
     end
 
     alias :size :count
