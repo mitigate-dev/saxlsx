@@ -121,6 +121,34 @@ describe Sheet do
     end
   end
 
+  context 'with mutliline strings (&#10;)' do
+    let(:filename) { "#{File.dirname(__FILE__)}/data/SpecMultiline10.xlsx" }
+
+    it 'should return multiline cells' do
+      Workbook.open filename do |w|
+        w.sheets[0].tap do |s|
+          s.rows[0].should eq [
+            "Test\nTest1\nTest3"
+          ]
+        end
+      end
+    end
+  end
+
+  context 'with mutliline strings (\n)' do
+    let(:filename) { "#{File.dirname(__FILE__)}/data/SpecMultilineN.xlsx" }
+
+    it 'should return multiline cells' do
+      Workbook.open filename do |w|
+        w.sheets[0].tap do |s|
+          s.rows[0].should eq [
+            "Test\nTest1\nTest3"
+          ]
+        end
+      end
+    end
+  end
+
   context 'with inline strings' do
     let(:filename) { "#{File.dirname(__FILE__)}/data/SpecInlineStrings.xlsx" }
 
