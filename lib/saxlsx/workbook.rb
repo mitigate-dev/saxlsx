@@ -7,9 +7,9 @@ module Saxlsx
     attr_accessor :date1904
     attr_reader :auto_format
 
-    def self.open(*args)
+    def self.open(filename, **kw_args)
       begin
-        workbook = self.new(*args)
+        workbook = new(filename, **kw_args)
         yield workbook
       ensure
         workbook.close if workbook
