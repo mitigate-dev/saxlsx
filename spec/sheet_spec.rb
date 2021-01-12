@@ -36,7 +36,7 @@ describe Sheet do
           3,
           DateTime.new(2013, 12, 13, 8, 0, 58),
           DateTime.new(1970, 1, 1),
-          BigDecimal.new('3.4028236692093801E+38'),
+          BigDecimal('3.4028236692093801E+38'),
           DateTime.new(2015, 2, 13, 12, 40, 5)
         ]
         s.rows[1].should eq [
@@ -175,7 +175,7 @@ describe Sheet do
       ["Time",       DateTime.new(2015, 2, 13, 12, 40, 5)],
       ["Percentage", 0.9999],
       ["Fraction",   0.5],
-      ["Scientific", BigDecimal.new('3.4028236692093801E+38')],
+      ["Scientific", BigDecimal('3.4028236692093801E+38')],
       ["Custom",     123.0],
     ].each.with_index do |row, i|
       name, value = row
@@ -202,7 +202,7 @@ describe Sheet do
       ["Time",       DateTime.new(2015, 2, 13, 12, 40, 5)],
       ["Percentage", 0.9999],
       ["Fraction",   0.5],
-      ["Scientific", BigDecimal.new('3.4028236692093801E+38')],
+      ["Scientific", BigDecimal('3.4028236692093801E+38')],
       ["Custom",     123.0],
     ].each.with_index do |row, i|
       name, value = row
