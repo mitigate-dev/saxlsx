@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 require 'benchmark'
-require 'axlsx'
-require 'saxlsx'
-require 'rubyXL'
-require 'simple_xlsx_reader'
-require 'creek'
-require 'oxcelix'
-require 'roo'
-require 'dullard'
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+  gem 'caxlsx'
+  gem 'rubyXL'
+  gem 'simple_xlsx_reader'
+  gem 'creek'
+  gem 'oxcelix'
+  gem 'roo'
+  gem 'dullard'
+  gem "saxlsx", path: File.expand_path("../..", __FILE__ )
+end
 
 module Saxlsx
   class Benchmarks
