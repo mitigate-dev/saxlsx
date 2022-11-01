@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 module Saxlsx
+  HIDDEN = 'hidden'.freeze
+
   class Sheet
 
-    attr_reader :name
+    attr_reader :name, :state
 
-    def initialize(name, index, file_system, workbook)
+    def initialize(name, state, index, file_system, workbook)
       @name = name
+      @state = state
       @index = index
       @file_system = file_system
       @workbook = workbook
@@ -13,6 +16,10 @@ module Saxlsx
 
     def rows
       @rows ||= RowsCollection.new(@index, @file_system, @workbook)
+    end
+
+    def hidden
+      state == HIDDEN
     end
 
     def to_csv(path)

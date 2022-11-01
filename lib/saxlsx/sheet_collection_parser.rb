@@ -2,7 +2,7 @@
 module Saxlsx
   class SheetCollectionParser < Ox::Sax
 
-    CurrentSheet = Struct.new :index, :name
+    CurrentSheet = Struct.new :index, :name, :state
 
     def self.parse(file_system, workbook, &block)
       SaxParser.parse(
@@ -33,6 +33,7 @@ module Saxlsx
       when :sheet
         @block.call Sheet.new(
           @current_sheet.name,
+          @current_sheet.state,
           @current_sheet.index,
           @file_system,
           @workbook
@@ -47,6 +48,8 @@ module Saxlsx
       if @current_sheet
         if name == :name
           @current_sheet.name = value
+        elsif name == :state
+          @current_sheet.state = value
         end
       elsif @workbook_pr
         if name == :date1904 && value =~ /true|1/i
