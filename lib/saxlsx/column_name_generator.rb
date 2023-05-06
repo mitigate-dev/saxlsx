@@ -5,13 +5,10 @@ module Saxlsx
     LAST  = 'Z'
 
     def self.next_to(previous)
-      char = previous ? previous[-1] : nil
-      if char.nil?
-        FIRST
-      elsif char < LAST
-        previous[0..-2] + char.next
+      if previous
+        previous.succ
       else
-        next_to(previous[0..-2]) + FIRST
+        FIRST
       end
     end
   end
