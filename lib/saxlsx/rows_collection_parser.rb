@@ -65,6 +65,7 @@ module Saxlsx
       if name == :row
         @block.call @current_row
         @current_row = nil
+        @current_row_number = nil
       end
     end
 
@@ -74,9 +75,14 @@ module Saxlsx
         when :t
           @current_type = value
         when :r
-          @current_column = value.gsub(/\d/, '')
+          value.delete_suffix!(@current_row_number)
+          @current_column = value
         when :s
           @current_number_format = detect_format_type(value.to_i)
+        end
+      elsif @current_element == :row
+        if name == :r
+          @current_row_number = value
         end
       end
     end
