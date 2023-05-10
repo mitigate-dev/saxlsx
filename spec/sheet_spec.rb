@@ -27,6 +27,16 @@ describe Sheet do
     end
   end
 
+  it 'handle enumeration' do
+    indexes = []
+    Workbook.open filename do |w|
+      w.sheets[0].rows.each.with_index do |r, i|
+        indexes << i
+      end
+    end
+    indexes.should eq [0, 1, 2, 3, 4, 5, 6]
+  end
+
   it 'Rows content' do
     Workbook.open filename do |w|
       w.sheets[0].tap do |s|

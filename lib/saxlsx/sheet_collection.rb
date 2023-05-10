@@ -10,7 +10,11 @@ module Saxlsx
     end
 
     def each(&block)
-      SheetCollectionParser.parse @file_system, @workbook, &block
+      if block
+        SheetCollectionParser.parse @file_system, @workbook, &block
+      else
+        to_enum
+      end
     end
 
   end

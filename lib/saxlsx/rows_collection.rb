@@ -12,7 +12,11 @@ module Saxlsx
     end
 
     def each(&block)
-      RowsCollectionParser.parse @index, @sheet, @workbook, &block
+      if block
+        RowsCollectionParser.parse @index, @sheet, @workbook, &block
+      else
+        to_enum
+      end
     end
 
     def count

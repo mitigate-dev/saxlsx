@@ -9,7 +9,11 @@ module Saxlsx
     end
 
     def each(&block)
-      StyleCollectionParser.parse @file_system, &block
+      if block
+        StyleCollectionParser.parse @file_system, &block
+      else
+        to_enum
+      end
     end
 
   end
