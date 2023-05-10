@@ -54,7 +54,6 @@ module Saxlsx
       case name
       when :row
         @current_row = []
-        @next_column = 'A'
       when :c
         @current_type = nil
         @current_number_format = nil
@@ -74,7 +73,11 @@ module Saxlsx
         when :t
           @current_type = value
         when :r
-          @current_column = value.gsub(/\d/, '')
+          # fill missing columns with nil values
+          nb_columns = extract_current_column(value) - 1
+          while @current_row.size != nb_columns
+            @current_row << nil
+          end
         when :s
           @current_number_format = detect_format_type(value.to_i)
         end
@@ -83,12 +86,7 @@ module Saxlsx
 
     def text(value)
       if @current_row && (@current_element == :v || @current_element == :t)
-        while @next_column != @current_column
-          @current_row << nil
-          @next_column = ColumnNameGenerator.next_to(@next_column)
-        end
         @current_row << value_of(value)
-        @next_column = ColumnNameGenerator.next_to(@next_column)
       end
     end
 
@@ -154,6 +152,31 @@ module Saxlsx
       else
         :unsupported
       end
+    end
+
+    def char_index(byte)
+      if byte >= 65 && byte <= 90
+        byte - 64
+      elsif byte >= 97 && byte <= 122
+        byte - 96
+      end
+    end
+
+    def extract_current_column(value)
+      letter_num = 0
+
+      value.each_byte do |b|
+        if index = char_index(b)
+          letter_num *= 26
+          letter_num += index
+        else
+          break
+        end
+      end
+
+      raise ArgumentError if letter_num == 0
+
+      letter_num
     end
   end
 end
