@@ -46,9 +46,5 @@ module Saxlsx
       @base_date ||= date1904 ? DATE_SYSTEM_1904 : DATE_SYSTEM_1900
     end
 
-    def to_csv(path)
-      sheets.each { |s| s.to_csv path }
-    end
-
   end
 end

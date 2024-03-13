@@ -51,11 +51,4 @@ describe Workbook do
       w.shared_strings.should include 'TST_ModMan_Insulto_SU_Normal'
     end
   end
-
-  it 'Export to CSV' do
-    Workbook.open filename do |w|
-      w.sheets.each { |s| s.should_receive(:to_csv).with(Dir.pwd) }
-      w.to_csv Dir.pwd
-    end
-  end
 end
